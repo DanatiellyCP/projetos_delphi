@@ -1,0 +1,32 @@
+--------------------------- Como Importar e Exportar Bancos MySql Via Terminal ---------------------------
+-> No Linux :
+	sudo apt-get install mysql-client
+
+-> No Windows:
+	Shell do MySql
+
+-> executar o cmd no caminho C:\xampp\mysql\bin
+
+-> Para exportar o banco de dados, execute o seguinte comando:
+mysqldump -u root -p nome_do_banco
+
+O argumento -u informa o usuário do banco de dados e o -p solicita a digitação da senha após a confirmação do comando. 
+O último argumento é o banco de dados que vai ser exportado.
+O comando vai gerar uma saída na própria tela, mas precisamos que essa saída seja redirecionada para um arquivo.
+Para fazermos isso, basta utilizamos o operador de redirecionamento de saída >.
+
+Veja:
+mysqldump -u root -p nome_do_banco > dump.sql
+Após fazer isso, o arquivo dump.sql será criado no diretório atual com todos os dados do seu banco.
+
+
+
+--> Exemplo:
+mysqldump -u root -p nome_banco > C:\caminho\dump.sql
+
+--------------------------- exemplos ---------------------------
+Comando para Exportar o banco:
+mysqldump -u root -p nome_banco > nome_arquivo.sql
+
+comando para Importar o banco 
+mysql -u root -h localhost -p nome_banco < c:\caminho\nome_arquivo.sql
