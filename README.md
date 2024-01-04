@@ -1,2 +1,3 @@
 # projetos_delphi
-Este repositório foi criado com o objetivo de salvar projetos, funções, procedures e tutoriais em Delphi, Pascal para ajudar no desenvolvimento de ferramentas, sistemas bem como pesquisas de soluções que envolva essas tecnologias.
+Este repositório foi criado com o objetivo de salvar projetos, funções, procedures e tutoriais em Delphi e Pascal, para ajudar no desenvolvimento de ferramentas e sistemas.
+Além de auxiliar em minhas pesquisas de soluções que envolva essas tecnologias.
