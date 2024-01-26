@@ -1,0 +1,18 @@
+Corrigindo Bug de Importação de Banco MySql
+-> Solução para o problema Unknown collation: 'utf8mb4_0900_ai_ci'
+
+Esse problema ocorre quando  tento subir um banco novo na minha maquina via prompt de comando CMD,
+porque se for importar pelo xampp ou pelo workbench, não da erro, mas não importa o banco
+
+Solução:
+Basicamente, eu troquei o comando 
+utf8mb4 por utf8 e 
+utf8mb4_0900_ai_ci por utf8_general_ci 
+em todos os arquivos pelo VS Code ou pelo Notepad++
+
+
+Exemplo de como subir o banco pelo prompt cmd:
+1° comando entra nessa pasta => Cd C:\xampp\mysql\bin
+
+2° Comando para importar o banco
+mysql -u root -h localhost -p nomeDoBanco_local < C:\endereco\banco_novo.sql
