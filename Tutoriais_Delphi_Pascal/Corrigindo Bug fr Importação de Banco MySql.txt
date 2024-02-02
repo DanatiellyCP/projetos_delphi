@@ -8,6 +8,11 @@ Solução:
 Basicamente, eu troquei o comando 
 utf8mb4 por utf8 e 
 utf8mb4_0900_ai_ci por utf8_general_ci 
+
+// Outro erro encontrado no arquivo .sql que solucionou da mesma forma
+trocar utf8_0900_ai_ci por utf8_general_ci
+
+
 em todos os arquivos pelo VS Code ou pelo Notepad++
 
 
