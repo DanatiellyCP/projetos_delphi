@@ -1,10 +1,11 @@
 object FrmConectarAlias: TFrmConectarAlias
   Left = 420
   Top = 147
-  Width = 544
-  Height = 408
+  AutoScroll = False
   BorderIcons = [biSystemMenu]
   Caption = 'Conectar Banco Por Alias'
+  ClientHeight = 381
+  ClientWidth = 503
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -46,7 +47,7 @@ object FrmConectarAlias: TFrmConectarAlias
     OnClick = Button1Click
   end
   object BtnConectarAlias: TButton
-    Left = 336
+    Left = 320
     Top = 346
     Width = 177
     Height = 25

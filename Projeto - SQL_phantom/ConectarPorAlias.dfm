@@ -23,7 +23,7 @@ object FrmConectarAlias: TFrmConectarAlias
     Height = 16
     Caption = 'Lista de Alias:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlue
+    Font.Color = clBlack
     Font.Height = -13
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]

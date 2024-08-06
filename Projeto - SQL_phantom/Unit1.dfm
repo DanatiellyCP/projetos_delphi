@@ -30,7 +30,7 @@ object FrmConfiguraAlias: TFrmConfiguraAlias
       Height = 92
       Caption = 'BDE'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlue
+      Font.Color = clBlack
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -58,7 +58,7 @@ object FrmConfiguraAlias: TFrmConfiguraAlias
       Height = 235
       Caption = 'MySQL'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clRed
+      Font.Color = clBlack
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []

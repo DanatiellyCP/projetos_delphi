@@ -51,7 +51,7 @@ begin
     FrmPrincipal.Connection.User := EditUser.Text;
 
     ShowMessage('Banco MySql Configurado com Sucesso :-)');
-    //Close;
+    Close;
 
   end
   else
@@ -69,7 +69,7 @@ begin
     FrmPrincipal.SqlBde.Active := False;
     FrmPrincipal.SqlBde.DatabaseName := EditAliasBDE.Text;
     ShowMessage('Banco BDE Conectado com Sucesso :-)');
-    //Close;
+    Close;
   end
   else
   begin

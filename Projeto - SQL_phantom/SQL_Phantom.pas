@@ -7,7 +7,7 @@ uses
   Dialogs, StdCtrls, Grids, DBGrids, ZAbstractConnection, ZConnection, DB,
   DBTables, ZAbstractRODataset, ZAbstractDataset, ZDataset, ComCtrls, ComObj,
   ZAbstractTable, ShellApi, IdBaseComponent, IdCoder, IdCoder3to4,
-  IdCoderMIME;
+  IdCoderMIME, ExtCtrls, JvComponentBase, JvCreateProcess;
 
 type
   TFrmPrincipal = class(TForm)
@@ -67,6 +67,9 @@ type
     MemoConvert: TMemo;
     RichEditBlob: TRichEdit;
     MemoTextoLimpo: TMemo;
+    Label8: TLabel;
+    Label9: TLabel;
+    OpenDialog1: TOpenDialog;
     procedure BtnSqlBdeClick(Sender: TObject);
     procedure BtnSqlMyClick(Sender: TObject);
     procedure BtnExportaExcelBdeClick(Sender: TObject);
@@ -682,24 +685,37 @@ end;
 
 procedure TFrmPrincipal.BtnBkBancoClick(Sender: TObject);
   var
-  caminhoBD, caminhoDUMP, nome : string;
+  caminhoBD, caminhoDUMP, nome, comando, nomeBanco, BinMySql : string;
+   s: PAnsiChar;
 begin
   // Botão para exportar arquivo Dump de Banco Mysql
   // Ainda mexendo nessa função, não está pronta ainda - boão invisivel
 
-   nome :=  FormatDateTime('dd-mm-yyyy', now);
+   BinMySql := InputBox('Input Box', 'Prompt', 'Default string');
+
+   ShellExecute(handle,'open', 'cmd.exe',Pchar('cd ' + BinMySql),nil, SW_SHOW );
+
+   nomeBanco := Connection.Database;
+   nome :=  FormatDateTime('dd-mm-yyyy-HH-MM-SS', now);
    caminhoBD := GetCurrentDir + '\BD\';
    caminhoBD := caminhoBD + nome +'.sql';
    caminhoDUMP := GetCurrentDir + '\BD\mysqldump.exe';
 
-   ShowMessage('Caminho: ' + caminhoDUMP);
+   //ShowMessage('Caminho: ' + caminhoDUMP);
 
-   ShellExecute(handle,'open', 'cmd.exe',Pchar(caminhoDUMP + 'mysqldump -u root -p nome_banco' + caminhoBD),nil, SW_SHOW );
+   comando := 'mysqldump -u root -p ' + nomeBanco + ' > ' + caminhoBD;
+   s := PAnsiChar(comando);
+
+   ShowMessage('comando: ' + comando);
+
+   //ShellExecute(0, nil, 'cmd.exe', s , nil, SW_HIDE);
+
+   //ShellExecute(handle,'open', 'cmd.exe',Pchar(caminhoDUMP + 'mysqldump -u root -p nome_banco' + caminhoBD),nil, SW_SHOW );
 
    //backupDados := true;
 
 
-   ShowMessage('Acabou!');
+     ShowMessage('Acabou!');
 
 end;
 

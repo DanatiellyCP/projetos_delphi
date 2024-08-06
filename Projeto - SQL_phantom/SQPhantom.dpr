@@ -10,6 +10,7 @@ uses
 
 begin
   Application.Initialize;
+  Application.Title := 'SQL Phantom';
   Application.CreateForm(TFrmPrincipal, FrmPrincipal);
   Application.CreateForm(TFrmConfiguraAlias, FrmConfiguraAlias);
   Application.CreateForm(TFrmConectarAlias, FrmConectarAlias);

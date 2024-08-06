@@ -30,7 +30,7 @@ object FrmConfiguraAlias: TFrmConfiguraAlias
       Height = 92
       Caption = 'BDE'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlue
+      Font.Color = clBlack
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -58,12 +58,12 @@ object FrmConfiguraAlias: TFrmConfiguraAlias
       Height = 235
       Caption = 'MySQL'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clRed
+      Font.Color = clBlack
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 1
+      TabOrder = 2
       object Label7: TLabel
         Left = 5
         Top = 16
@@ -111,14 +111,14 @@ object FrmConfiguraAlias: TFrmConfiguraAlias
         Top = 176
         Width = 220
         Height = 21
-        TabOrder = 2
+        TabOrder = 3
       end
       object EditUser: TEdit
         Left = 5
         Top = 128
         Width = 220
         Height = 21
-        TabOrder = 3
+        TabOrder = 2
       end
     end
     object BtnConectarMy: TButton
@@ -127,7 +127,7 @@ object FrmConfiguraAlias: TFrmConfiguraAlias
       Width = 178
       Height = 25
       Caption = 'Conectar MySql'
-      TabOrder = 2
+      TabOrder = 3
       OnClick = BtnConectarMyClick
     end
     object BtnConectarBDE: TButton
@@ -136,7 +136,7 @@ object FrmConfiguraAlias: TFrmConfiguraAlias
       Width = 178
       Height = 25
       Caption = 'Conectar BDE'
-      TabOrder = 3
+      TabOrder = 1
       OnClick = BtnConectarBDEClick
     end
   end

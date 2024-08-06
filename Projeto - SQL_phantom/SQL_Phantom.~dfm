@@ -1,11 +1,11 @@
 object FrmPrincipal: TFrmPrincipal
-  Left = 563
-  Top = 166
+  Left = 334
+  Top = 82
   AutoScroll = False
   BorderIcons = [biSystemMenu, biMinimize]
-  Caption = 'SQL Phantom V. 28/12/2023'
-  ClientHeight = 602
-  ClientWidth = 793
+  Caption = 'SQL Phantom V. 06/08/2024'
+  ClientHeight = 624
+  ClientWidth = 885
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,35 +19,48 @@ object FrmPrincipal: TFrmPrincipal
   object PageControl1: TPageControl
     Left = 8
     Top = 32
-    Width = 777
-    Height = 569
-    ActivePage = TabSheet2
+    Width = 865
+    Height = 585
+    ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'BDE'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlue
+      Font.Color = clGray
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
       object Label2: TLabel
         Left = 11
-        Top = 8
+        Top = 29
         Width = 21
         Height = 13
         Caption = 'SQL'
       end
       object Label3: TLabel
         Left = 11
-        Top = 200
+        Top = 221
         Width = 51
         Height = 13
         Caption = 'Resultado:'
       end
+      object Label8: TLabel
+        Left = 216
+        Top = 9
+        Width = 236
+        Height = 26
+        Caption = 'Banco BDE Paradox'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -24
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
       object MemoSqlBDE: TMemo
         Left = 8
-        Top = 24
+        Top = 45
         Width = 689
         Height = 110
         ScrollBars = ssVertical
@@ -55,7 +68,7 @@ object FrmPrincipal: TFrmPrincipal
       end
       object GroupBox1: TGroupBox
         Left = 8
-        Top = 137
+        Top = 158
         Width = 689
         Height = 57
         Caption = 'Comandos'
@@ -108,21 +121,21 @@ object FrmPrincipal: TFrmPrincipal
       end
       object DBGridBDE: TDBGrid
         Left = 8
-        Top = 216
+        Top = 237
         Width = 697
         Height = 248
         DataSource = DsSqlBde
         ReadOnly = True
         TabOrder = 2
         TitleFont.Charset = DEFAULT_CHARSET
-        TitleFont.Color = clBlue
+        TitleFont.Color = clGray
         TitleFont.Height = -11
         TitleFont.Name = 'MS Sans Serif'
         TitleFont.Style = []
       end
       object BtnExportaExcelBde: TButton
         Left = 579
-        Top = 467
+        Top = 496
         Width = 123
         Height = 25
         Caption = 'Exportar'
@@ -131,7 +144,7 @@ object FrmPrincipal: TFrmPrincipal
       end
       object Memo1: TMemo
         Left = 8
-        Top = 468
+        Top = 497
         Width = 545
         Height = 53
         ScrollBars = ssBoth
@@ -140,7 +153,7 @@ object FrmPrincipal: TFrmPrincipal
       end
       object Button2: TButton
         Left = 580
-        Top = 498
+        Top = 527
         Width = 125
         Height = 22
         Caption = 'Exportar CSV'
@@ -149,7 +162,7 @@ object FrmPrincipal: TFrmPrincipal
       end
       object BtnLimparBDE: TButton
         Left = 706
-        Top = 103
+        Top = 63
         Width = 47
         Height = 25
         Caption = 'Limpar'
@@ -158,7 +171,7 @@ object FrmPrincipal: TFrmPrincipal
       end
       object BtnVoltaBDE: TButton
         Left = 706
-        Top = 23
+        Top = 31
         Width = 47
         Height = 25
         Caption = '<'
@@ -169,7 +182,7 @@ object FrmPrincipal: TFrmPrincipal
     object TabSheet2: TTabSheet
       Caption = 'MySql'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clRed
+      Font.Color = clGray
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
@@ -177,21 +190,34 @@ object FrmPrincipal: TFrmPrincipal
       ParentFont = False
       object Label4: TLabel
         Left = 11
-        Top = 8
+        Top = 32
         Width = 21
         Height = 13
         Caption = 'SQL'
       end
       object Label5: TLabel
         Left = 11
-        Top = 200
+        Top = 224
         Width = 51
         Height = 13
         Caption = 'Resultado:'
       end
+      object Label9: TLabel
+        Left = 216
+        Top = 9
+        Width = 153
+        Height = 29
+        Caption = 'Banco MySql'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -24
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
       object MemoSqlMy: TMemo
         Left = 8
-        Top = 24
+        Top = 48
         Width = 689
         Height = 110
         ScrollBars = ssVertical
@@ -199,7 +225,7 @@ object FrmPrincipal: TFrmPrincipal
       end
       object GroupBox2: TGroupBox
         Left = 8
-        Top = 137
+        Top = 161
         Width = 689
         Height = 57
         Caption = 'Comandos'
@@ -239,6 +265,7 @@ object FrmPrincipal: TFrmPrincipal
           Caption = 'BK Banco'
           Enabled = False
           TabOrder = 3
+          Visible = False
           OnClick = BtnBkBancoClick
         end
         object BtnUpdateMy: TButton
@@ -262,13 +289,13 @@ object FrmPrincipal: TFrmPrincipal
       end
       object DBGrid2: TDBGrid
         Left = 8
-        Top = 216
+        Top = 240
         Width = 697
         Height = 248
         DataSource = DsSqlMy
         TabOrder = 2
         TitleFont.Charset = DEFAULT_CHARSET
-        TitleFont.Color = clRed
+        TitleFont.Color = clGray
         TitleFont.Height = -11
         TitleFont.Name = 'MS Sans Serif'
         TitleFont.Style = []
@@ -276,7 +303,7 @@ object FrmPrincipal: TFrmPrincipal
       end
       object BtnExportaExcelMySql: TButton
         Left = 579
-        Top = 467
+        Top = 491
         Width = 123
         Height = 25
         Caption = 'Exportar'
@@ -285,7 +312,7 @@ object FrmPrincipal: TFrmPrincipal
       end
       object MemoMySql: TMemo
         Left = 8
-        Top = 468
+        Top = 492
         Width = 545
         Height = 53
         ScrollBars = ssBoth
@@ -294,7 +321,7 @@ object FrmPrincipal: TFrmPrincipal
       end
       object Button3: TButton
         Left = 580
-        Top = 498
+        Top = 522
         Width = 125
         Height = 22
         Caption = 'Exportar CSV'
@@ -303,7 +330,7 @@ object FrmPrincipal: TFrmPrincipal
       end
       object BtnLimparMySql: TButton
         Left = 706
-        Top = 103
+        Top = 79
         Width = 47
         Height = 25
         Caption = 'Limpar'
@@ -312,7 +339,7 @@ object FrmPrincipal: TFrmPrincipal
       end
       object BtnVoltarMySql: TButton
         Left = 706
-        Top = 23
+        Top = 47
         Width = 47
         Height = 25
         Caption = '<'
@@ -417,14 +444,14 @@ object FrmPrincipal: TFrmPrincipal
     OnClick = BtnConnectarAliasClick
   end
   object MemoConvert: TMemo
-    Left = 816
+    Left = 1040
     Top = 48
     Width = 369
     Height = 89
     TabOrder = 3
   end
   object RichEditBlob: TRichEdit
-    Left = 824
+    Left = 1048
     Top = 304
     Width = 361
     Height = 89
@@ -433,7 +460,7 @@ object FrmPrincipal: TFrmPrincipal
     TabOrder = 4
   end
   object MemoTextoLimpo: TMemo
-    Left = 816
+    Left = 1040
     Top = 160
     Width = 369
     Height = 89
@@ -455,6 +482,7 @@ object FrmPrincipal: TFrmPrincipal
   end
   object Sql_my: TZQuery
     Connection = Connection
+    ReadOnly = True
     Params = <>
     Left = 640
   end
@@ -477,5 +505,9 @@ object FrmPrincipal: TFrmPrincipal
     Connection = Connection
     Left = 752
     Top = 2
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 792
+    Top = 8
   end
 end

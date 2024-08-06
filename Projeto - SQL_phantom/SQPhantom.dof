@@ -135,10 +135,9 @@ ProductName=
 ProductVersion=1.0.0.0
 Comments=
 [Excluded Packages]
-c:\program files (x86)\borland\delphi7\Projects\Bpl\SakEmail.bpl=SakEmail by the SakEmail team
 C:\Program Files (x86)\Borland\Delphi7\Projects\Bpl\JvControlsDesign70.bpl=JVCL Visual Controls
-c:\program files (x86)\borland\delphi7\Projects\Bpl\dclusr70.bpl=Borland User Components
-C:\Program Files (x86)\Borland\Delphi7\Projects\Bpl\ZMstr190D7.bpl=ZipMaster 1.9.0
+C:\Program Files (x86)\Borland\Delphi7\ACBR\Lib\Delphi\LibD7\Win32\DCLACBr_OpenSSL.bpl=ACBr - (design-time) Bind para OpenSSL 1.1.1 - (http://www.projetoacbr.com.br/)
+C:\Program Files (x86)\Borland\Delphi7\ACBR\Lib\Delphi\LibD7\Win32\DCLACBr_NF3eDANF3eESCPOS.bpl=ACBr - (design-time) DANF3e para NF3e Impressora Serial - (http://www.projetoacbr.com.br/)
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
