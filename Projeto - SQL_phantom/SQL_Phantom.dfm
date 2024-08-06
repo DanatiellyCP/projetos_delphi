@@ -1,6 +1,6 @@
 object FrmPrincipal: TFrmPrincipal
-  Left = 308
-  Top = 95
+  Left = 638
+  Top = 66
   AutoScroll = False
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'SQL Phantom V. 28/12/2023'
@@ -21,7 +21,7 @@ object FrmPrincipal: TFrmPrincipal
     Top = 32
     Width = 777
     Height = 569
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'BDE'
@@ -272,6 +272,7 @@ object FrmPrincipal: TFrmPrincipal
         TitleFont.Height = -11
         TitleFont.Name = 'MS Sans Serif'
         TitleFont.Style = []
+        OnDrawDataCell = DBGrid2DrawDataCell
       end
       object BtnExportaExcelMySql: TButton
         Left = 579
@@ -422,6 +423,22 @@ object FrmPrincipal: TFrmPrincipal
     Height = 89
     TabOrder = 3
   end
+  object RichEditBlob: TRichEdit
+    Left = 824
+    Top = 304
+    Width = 361
+    Height = 89
+    Lines.Strings = (
+      'RichEditBlob')
+    TabOrder = 4
+  end
+  object MemoTextoLimpo: TMemo
+    Left = 816
+    Top = 160
+    Width = 369
+    Height = 89
+    TabOrder = 5
+  end
   object Connection: TZConnection
     ControlsCodePage = cGET_ACP
     AutoEncodeStrings = False
@@ -438,6 +455,7 @@ object FrmPrincipal: TFrmPrincipal
   end
   object Sql_my: TZQuery
     Connection = Connection
+    ReadOnly = True
     Params = <>
     Left = 640
   end

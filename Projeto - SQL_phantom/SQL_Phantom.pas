@@ -6,7 +6,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Grids, DBGrids, ZAbstractConnection, ZConnection, DB,
   DBTables, ZAbstractRODataset, ZAbstractDataset, ZDataset, ComCtrls, ComObj,
-  ZAbstractTable, ShellApi;
+  ZAbstractTable, ShellApi, IdBaseComponent, IdCoder, IdCoder3to4,
+  IdCoderMIME;
 
 type
   TFrmPrincipal = class(TForm)
@@ -64,6 +65,8 @@ type
     BtnUpdateBDE: TButton;
     BtnAlterBDE: TButton;
     MemoConvert: TMemo;
+    RichEditBlob: TRichEdit;
+    MemoTextoLimpo: TMemo;
     procedure BtnSqlBdeClick(Sender: TObject);
     procedure BtnSqlMyClick(Sender: TObject);
     procedure BtnExportaExcelBdeClick(Sender: TObject);
@@ -86,6 +89,8 @@ type
     procedure BtnAlterMyClick(Sender: TObject);
     procedure BtnUpdateBDEClick(Sender: TObject);
     procedure BtnAlterBDEClick(Sender: TObject);
+    procedure DBGrid2DrawDataCell(Sender: TObject; const Rect: TRect;
+      Field: TField; State: TGridDrawState);
   private
     { Private declarations }
   public
@@ -98,6 +103,7 @@ type
     function ChecarBDConectado(TipoBanco : String): boolean;
     function ConvertTipoMemo(TextoCampo:String) : String;
     function TrocaCaracterEspecial(aTexto : string; aLimExt : boolean) : string;
+    function EliminaFormatacaoBlob(TextoBlob: String): String;
   end;
 
 var
@@ -480,7 +486,7 @@ function TFrmPrincipal.ExportarCsvMySql(Query1: TZQuery): boolean;
   var
   i, j, linha, coluna : integer;
   valorcampo, ArquivoNome : string;
-  StringTitulo, StringValores : String;
+  StringTitulo, StringValores, BlobToString : String;
 begin
   // função para exportar query MySql para csv
   MemoMySql.Clear;
@@ -503,6 +509,7 @@ begin
   DBGrid2.DataSource.DataSet.First;
   while not DBGrid2.DataSource.DataSet.Eof do
   begin
+
     StringValores := '';
     for j := 0 to DBGrid2.Columns.Count -1 do
     begin
@@ -512,7 +519,7 @@ begin
       end
       else
       begin
-        StringValores := StringValores + ';' +  DBGrid2.Fields[j].Text;
+        StringValores := StringValores + ';' + DBGrid2.Fields[j].Text;
       end;
 
     end;
@@ -819,9 +826,12 @@ begin
 end;
 
 function TFrmPrincipal.ConvertTipoMemo(TextoCampo: String) : String;
-  var Resultado : String;
+  var Resultado, TextoBlob : String;
 begin
   MemoConvert.Lines.Clear;
+
+  MemoTextoLimpo.Lines.Clear;
+
   MemoConvert.Text := TextoCampo;
   Resultado := TrocaCaracterEspecial(MemoConvert.Text, True);//  MemoConvert.Text;
   MemoMemo.Lines.Clear;
@@ -860,6 +870,37 @@ begin
      for i:=1 to 48 do
        xTexto := StringReplace(xTexto, xCarExt[i], '', [rfreplaceall]);  
    Result := xTexto;
+end;
+
+function TFrmPrincipal.EliminaFormatacaoBlob(TextoBlob: String): String;
+  var
+  TextoLimpo: String;
+  streStream: TStringStream;
+begin
+
+  RichEditBlob.Lines.Clear;
+  MemoTextoLimpo.Lines.Clear;
+
+  streStream := TStringStream.Create(TextoBlob);
+
+  RichEditBlob.Lines.LoadFromStream(streStream);
+  MemoTextoLimpo.Text :=  RichEditBlob.Text;
+  TextoLimpo :=  MemoTextoLimpo.Text;
+
+  Result := TextoLimpo;
+
+end;
+
+procedure TFrmPrincipal.DBGrid2DrawDataCell(Sender: TObject;
+  const Rect: TRect; Field: TField; State: TGridDrawState);
+
+  var S : String;
+begin
+  if Field.IsBlob then
+  begin
+     S := (EliminaFormatacaoBlob(Field.Value)) ; //EliminaFormatacaoBlob(Field.AsString);
+     DBGrid2.DataSource.DataSet.FieldByName(Field.Name).DisplayLabel := S;
+  end;
 end;
 
 end.
