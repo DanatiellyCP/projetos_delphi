@@ -1,0 +1,39 @@
+unit UBde;
+
+interface
+
+uses dados;
+
+procedure ExecultaQuery(Query: String; IsExec:Boolean);
+
+implementation
+
+procedure ExecultaQuery(Query: String; IsExec:Boolean);
+begin
+  try
+    DmDados.SqlBde.Active := False;
+    DmDados.SqlBde.SQL.Clear;
+    DmDados.SqlBde.SQL.Add(Query);
+
+    if IsExec = False then
+    begin
+      DmDados.SqlBde.Active := True;
+    end
+    else
+    begin
+      DmDados.SqlBde.ExecSQL;
+    end;
+  except
+    on E: Exception do
+    begin
+      ShowMessage(E.Message);
+    end;
+  end;
+
+
+
+
+end;
+
+end.
+ 

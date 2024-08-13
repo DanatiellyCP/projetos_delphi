@@ -49,7 +49,7 @@ object FrmPrincipal: TFrmPrincipal
         Left = 216
         Top = 9
         Width = 236
-        Height = 26
+        Height = 29
         Caption = 'Banco BDE Paradox'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGray

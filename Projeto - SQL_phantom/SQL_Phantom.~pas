@@ -782,6 +782,9 @@ begin
 end;
 
 procedure TFrmPrincipal.BtnUpdateBDEClick(Sender: TObject);
+  var
+  I : Integer;
+  Query : String;
 begin
   //Botão de Update BDE - danny - 24-10-2023
 
@@ -794,10 +797,17 @@ begin
   try
     TextoSqlBDELog := '';
     TextoSqlBDELog := MemoSqlBDE.Text;
-    SqlBde.Active := False;
-    SqlBde.SQL.Clear;
-    SqlBde.SQL.Add(MemoSqlBDE.Text);
-    SqlBde.ExecSQL;
+
+    for I:= 0 to MemoSqlBDE.Lines.Count -1  do
+    begin
+      Query := MemoSqlBDE.lines.Strings[I];
+      SqlBde.Active := False;
+      SqlBde.SQL.Clear;
+      //SqlBde.SQL.Add(MemoSqlBDE.Text);
+      SqlBde.SQL.Add(Query);
+      SqlBde.ExecSQL;
+    end;
+
     Label3.Caption := 'Resultado: ' + IntToStr(SqlBde.RowsAffected) + ' Linhas afetadas.';
     ShowMessage('UPDATE Realizado com Sucesso! ');
   except
