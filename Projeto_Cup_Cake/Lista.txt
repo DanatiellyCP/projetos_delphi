@@ -1,0 +1,15 @@
+Codigo
+Nome
+Endereco
+Bairro
+Cep
+Cidade
+Uf
+Cpf
+Rg
+Telefone
+Pai
+Mae
+Uc
+Email
+

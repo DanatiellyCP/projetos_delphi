@@ -1,6 +1,6 @@
 object FrmPrincipal: TFrmPrincipal
-  Left = 334
-  Top = 82
+  Left = 173
+  Top = 43
   AutoScroll = False
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'SQL Phantom V. 06/08/2024'
@@ -14,6 +14,7 @@ object FrmPrincipal: TFrmPrincipal
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object PageControl1: TPageControl
@@ -21,7 +22,7 @@ object FrmPrincipal: TFrmPrincipal
     Top = 32
     Width = 865
     Height = 585
-    ActivePage = TabSheet1
+    ActivePage = TabSheet4
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'BDE'
@@ -424,6 +425,22 @@ object FrmPrincipal: TFrmPrincipal
         Visible = False
       end
     end
+    object TabSheet4: TTabSheet
+      Caption = 'Auto Completar Teste'
+      ImageIndex = 3
+      object memoAutoComplete: TMemo
+        Left = 8
+        Top = 56
+        Width = 729
+        Height = 417
+        Lines.Strings = (
+          'memoAutoComplete')
+        ScrollBars = ssBoth
+        TabOrder = 0
+        OnKeyDown = memoAutoCompleteKeyDown
+        OnKeyUp = memoAutoCompleteKeyUp
+      end
+    end
   end
   object Button1: TButton
     Left = 8
@@ -509,5 +526,14 @@ object FrmPrincipal: TFrmPrincipal
   object OpenDialog1: TOpenDialog
     Left = 792
     Top = 8
+  end
+  object AutoComplete: TPopupMenu
+    Left = 536
+    Top = 8
+    object AutoComplete1: TMenuItem
+      OnClick = AutoComplete1Click
+      OnAdvancedDrawItem = AutoComplete1AdvancedDrawItem
+      OnMeasureItem = AutoComplete1MeasureItem
+    end
   end
 end

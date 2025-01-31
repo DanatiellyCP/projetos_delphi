@@ -7,7 +7,7 @@ uses
   Dialogs, StdCtrls, Grids, DBGrids, ZAbstractConnection, ZConnection, DB,
   DBTables, ZAbstractRODataset, ZAbstractDataset, ZDataset, ComCtrls, ComObj,
   ZAbstractTable, ShellApi, IdBaseComponent, IdCoder, IdCoder3to4,
-  IdCoderMIME, ExtCtrls, JvComponentBase, JvCreateProcess;
+  IdCoderMIME, ExtCtrls, JvComponentBase, JvCreateProcess, Menus, StrUtils, Types;
 
 type
   TFrmPrincipal = class(TForm)
@@ -70,6 +70,10 @@ type
     Label8: TLabel;
     Label9: TLabel;
     OpenDialog1: TOpenDialog;
+    AutoComplete: TPopupMenu;
+    AutoComplete1: TMenuItem;
+    TabSheet4: TTabSheet;
+    memoAutoComplete: TMemo;
     procedure BtnSqlBdeClick(Sender: TObject);
     procedure BtnSqlMyClick(Sender: TObject);
     procedure BtnExportaExcelBdeClick(Sender: TObject);
@@ -94,8 +98,20 @@ type
     procedure BtnAlterBDEClick(Sender: TObject);
     procedure DBGrid2DrawDataCell(Sender: TObject; const Rect: TRect;
       Field: TField; State: TGridDrawState);
+    procedure AutoComplete1Click(Sender: TObject);
+    procedure AutoComplete1MeasureItem(Sender: TObject; ACanvas: TCanvas;
+      var Width, Height: Integer);
+    procedure AutoComplete1AdvancedDrawItem(Sender: TObject;
+      ACanvas: TCanvas; ARect: TRect; State: TOwnerDrawState);
+    procedure memoAutoCompleteKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure memoAutoCompleteKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    FAutoCompleteList: TStringList;
+
   public
     { Public declarations }
     function ExportarExcel(Query1: Tquery): boolean;
@@ -107,6 +123,15 @@ type
     function ConvertTipoMemo(TextoCampo:String) : String;
     function TrocaCaracterEspecial(aTexto : string; aLimExt : boolean) : string;
     function EliminaFormatacaoBlob(TextoBlob: String): String;
+
+    procedure AutoCompletPopUp(Sender : TObject);
+    function SelectWordUnderCaret(AMemo:TMemo):string;
+
+
+    procedure InitializeAutoComplete;
+    procedure DoAutoComplete;
+    function CharInSet(C: Char; const CharSet: TSysCharSet): Boolean;
+
   end;
 
 var
@@ -929,4 +954,187 @@ begin
   end;
 end;
 
+procedure TFrmPrincipal.AutoCompletPopUp(Sender: TObject);
+var i : integer;
+NewItem : TMenuItem;
+AutoCompleteToken: String;
+begin
+    //filter list by token
+    AutoCompleteToken := SelectWordUnderCaret(memoAutoComplete);
+    AutoComplete.Items.Clear;
+    for i:=0 to memoAutoComplete.Lines.Count -1 do
+    begin
+         if SameText(LeftStr(memoAutoComplete.Lines.Strings[i],Length(AutoCompleteToken)),AutoCompleteToken) then
+         begin
+             NewItem := TMenuItem.Create(AutoComplete);
+             NewItem.Caption := memoAutoComplete.Lines.Strings[i];
+             NewItem.OnClick := AutoComplete1Click;
+             NewItem.OnMeasureItem := AutoComplete1MeasureItem;
+             NewItem.OnAdvancedDrawItem := AutoComplete1AdvancedDrawItem;
+             AutoComplete.Items.Add(NewItem);
+         end;
+    end;
+end;
+function TFrmPrincipal.SelectWordUnderCaret(AMemo: TMemo): string;
+  var
+   Line    : Integer;
+   Column  : Integer;
+   LineText: string;
+   InitPos : Integer;
+   EndPos  : Integer;
+begin
+   //Get the caret position
+   Line   := AMemo.Perform(EM_LINEFROMCHAR,AMemo.SelStart, 0) ;
+   Column := AMemo.SelStart - AMemo.Perform(EM_LINEINDEX, Line, 0) ;
+   //Validate the line number
+   if AMemo.Lines.Count-1 < Line then Exit;
+
+   //Get the text of the line
+   LineText := AMemo.Lines[Line];
+
+   Inc(Column);
+   InitPos := Column;
+   //search the initial position using the space symbol as separator
+   while (InitPos > 0) and (LineText[InitPos] <> ' ') do Dec(InitPos);
+   Inc(Column);
+
+   EndPos := Column;
+   //search the final position using the space symbol as separator
+   while (EndPos <= Length(LineText)) and (LineText[EndPos] <> ' ') do Inc(EndPos);
+
+   //Get the text
+   Result := Trim(Copy(LineText, InitPos, EndPos - InitPos));
+
+   //Finally select the text in the Memo
+   AMemo.SelStart  := AMemo.Perform(EM_LINEINDEX, Line, 0)+InitPos;
+   AMemo.SelLength := Length(Result);
+
+end;
+
+
+procedure TFrmPrincipal.AutoComplete1Click(Sender: TObject);
+begin
+  {memoAutoComplete.Lines.Text := memoAutoComplete.Lines.Text + AutoComplete.Items.Caption;
+  Application.ProcessMessages;}
+end;
+
+procedure TFrmPrincipal.AutoComplete1MeasureItem(Sender: TObject;
+  ACanvas: TCanvas; var Width, Height: Integer);
+begin
+  /////
+  //memoAutoComplete.Lines.Text := memoAutoComplete.Lines.Text + AutoComplete.Items.Caption;
+end;
+
+procedure TFrmPrincipal.AutoComplete1AdvancedDrawItem(Sender: TObject;
+  ACanvas: TCanvas; ARect: TRect; State: TOwnerDrawState);
+begin
+  /////
+end;
+
+
+procedure TFrmPrincipal.memoAutoCompleteKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var pt : TPoint;
+begin
+    {if (Key = VK_SPACE) and (GetKeyState(VK_CONTROL) < 0) then
+     begin
+          pt := memoAutoComplete.ClientToScreen(Point(0,memoAutoComplete.Height));
+          AutoComplete.Popup(pt.X,pt.Y);
+     end;}
+
+end;
+
+procedure TFrmPrincipal.DoAutoComplete;
+var
+  LastWord, Suggestion: string;
+  WordStart: Integer;
+  i: Integer;
+begin
+  // Obter a posição inicial da última palavra digitada
+  WordStart := memoAutoComplete.SelStart;
+  while (WordStart > 0) and not (memoAutoComplete.Text[WordStart] in [' ', #13, #10]) do
+    Dec(WordStart);
+
+  // Determinar a última palavra digitada
+  if WordStart < memoAutoComplete.SelStart then
+    LastWord := Copy(memoAutoComplete.Text, WordStart + 1, memoAutoComplete.SelStart - WordStart);
+
+  // Procurar sugestão que começa com a última palavra digitada
+  for i := 0 to FAutoCompleteList.Count - 1 do
+  begin
+    Suggestion := FAutoCompleteList[i];
+    //if Suggestion.ToLower.StartsWith(LastWord.ToLower) then
+    //if Copy(Suggestion, 1, Length(LastWord)).ToLower = LastWord.ToLower then
+    if LowerCase(Copy(Suggestion, 1, Length(LastWord))) = LowerCase(LastWord) then
+
+    begin
+      // Substituir a palavra no Memo com a sugestão
+      memoAutoComplete.SelStart := WordStart + 1; // Mover cursor para o início da última palavra
+      memoAutoComplete.SelLength := Length(LastWord); // Selecionar a última palavra
+      memoAutoComplete.SelText := Suggestion; // Substituir pela sugestão
+
+      // Ajustar o cursor para o final da sugestão
+      memoAutoComplete.SelStart := WordStart + Length(Suggestion);
+      memoAutoComplete.SelLength := 0;
+      Exit;
+    end;
+  end;
+end;
+
+
+procedure TFrmPrincipal.InitializeAutoComplete;
+begin
+  FAutoCompleteList := TStringList.Create;
+  FAutoCompleteList.Add('Delphi');
+  FAutoCompleteList.Add('Programming');
+  FAutoCompleteList.Add('Component');
+  FAutoCompleteList.Add('Function');
+  FAutoCompleteList.Add('Procedure');
+  FAutoCompleteList.Add('Event');
+
+  FAutoCompleteList.Add('Create');
+  FAutoCompleteList.Add('Delete');
+  FAutoCompleteList.Add('Update');
+  FAutoCompleteList.Add('Insert');
+  FAutoCompleteList.Add('Insert Into');
+  FAutoCompleteList.Add('Left');
+  FAutoCompleteList.Add('Join');
+
+  //ShowMessage(FAutoCompleteList.Text);
+
+  Application.ProcessMessages;
+
+end;
+
+function TFrmPrincipal.CharInSet(C: Char; const CharSet: TSysCharSet): Boolean;
+begin
+   Result := C in CharSet;
+end;
+
+procedure TFrmPrincipal.memoAutoCompleteKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+   //if Key in [Ord('A')..Ord('Z'), Ord('a')..Ord('z'), VK_BACK] then
+   if (Key = VK_SPACE) and (GetKeyState(VK_CONTROL) < 0) then
+   begin
+      DoAutoComplete;
+   end;
+
+
+end;
+
+procedure TFrmPrincipal.FormShow(Sender: TObject);
+begin
+  // inicializa o auto completar
+  InitializeAutoComplete;
+end;
+
 end.
+
+
+
+
+///// Modificações - Danny - 13/01/25
+//// Função para auocompletar memo.
+//referencias :
+// https://stackoverflow.com/questions/6338426/delphi-autocomplete-memo
+// https://stackoverflow.com/questions/6339446/delphi-get-the-whole-word-where-the-caret-is-in-a-memo
